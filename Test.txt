@@ -1,0 +1,15 @@
+i - Insert mode 
+Esc - Out of insert mode 
+
+yy - copy a line (2yy) 
+p - paste a line 
+
+dd - cut/delete (2dd, 100dd)  
+
+:w - save the file 
+
+:wq - save and exit 
+
+:1 - first line 
+:10 - line 10 
+:$ - end of file/last line 
