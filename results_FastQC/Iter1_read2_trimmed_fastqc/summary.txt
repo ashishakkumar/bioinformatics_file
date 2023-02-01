@@ -1,0 +1,11 @@
+PASS	Basic Statistics	Iter1_read2_trimmed.fastq
+PASS	Per base sequence quality	Iter1_read2_trimmed.fastq
+PASS	Per tile sequence quality	Iter1_read2_trimmed.fastq
+PASS	Per sequence quality scores	Iter1_read2_trimmed.fastq
+FAIL	Per base sequence content	Iter1_read2_trimmed.fastq
+PASS	Per sequence GC content	Iter1_read2_trimmed.fastq
+PASS	Per base N content	Iter1_read2_trimmed.fastq
+WARN	Sequence Length Distribution	Iter1_read2_trimmed.fastq
+PASS	Sequence Duplication Levels	Iter1_read2_trimmed.fastq
+PASS	Overrepresented sequences	Iter1_read2_trimmed.fastq
+PASS	Adapter Content	Iter1_read2_trimmed.fastq

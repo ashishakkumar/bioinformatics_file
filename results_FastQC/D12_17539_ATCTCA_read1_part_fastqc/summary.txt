@@ -1,0 +1,11 @@
+PASS	Basic Statistics	D12_17539_ATCTCA_read1_part.fastq
+PASS	Per base sequence quality	D12_17539_ATCTCA_read1_part.fastq
+PASS	Per tile sequence quality	D12_17539_ATCTCA_read1_part.fastq
+PASS	Per sequence quality scores	D12_17539_ATCTCA_read1_part.fastq
+FAIL	Per base sequence content	D12_17539_ATCTCA_read1_part.fastq
+PASS	Per sequence GC content	D12_17539_ATCTCA_read1_part.fastq
+PASS	Per base N content	D12_17539_ATCTCA_read1_part.fastq
+PASS	Sequence Length Distribution	D12_17539_ATCTCA_read1_part.fastq
+PASS	Sequence Duplication Levels	D12_17539_ATCTCA_read1_part.fastq
+PASS	Overrepresented sequences	D12_17539_ATCTCA_read1_part.fastq
+FAIL	Adapter Content	D12_17539_ATCTCA_read1_part.fastq
