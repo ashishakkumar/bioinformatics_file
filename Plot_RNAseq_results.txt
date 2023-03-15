@@ -1,0 +1,149 @@
+## DESeq2
+library("DESeq2")
+
+
+data=read.table("RUN3_all_RD1-RD16_analysis.txt",header=T)
+
+samp=read.table("SampleInformation.txt",header=T)
+
+
+datamatrix=as.data.frame(data)
+
+sampmatrix=as.data.frame(samp)
+
+
+dds <- DESeqDataSetFromMatrix(countData = datamatrix, colData=sampmatrix, design=~bin)
+
+dds
+
+prdds <- DESeq(dds)
+
+prdds
+
+res <- results(prdds)
+
+res
+
+## MA plot 
+
+
+plotMA(res, ylim=c(-5,5))
+
+
+### 
+
+## Normalization with RUVseq and DE analysis with DESeq2 (ERCC spike-ins being control genes)
+
+
+library(RUVSeq)
+
+library(DESeq2)
+
+
+whdata=read.table("RUN3_all_RD1-RD16_analysis.txt",header=T)
+
+
+spikes <- rownames(whdata)[grep("ERCC", rownames(whdata))]
+
+
+x <- as.factor(c("T1","T1","T1","T1","T2","T2","T2","T2","T3","T3","T3","T3","T4","T4","T4","T4"))
+
+
+set <- newSeqExpressionSet(as.matrix(whdata),phenoData = data.frame(x, row.names=colnames(whdata)))
+
+
+set1 <- RUVg(set, spikes, k=1)
+
+
+pData(set1)
+
+
+
+colors=c(rep("red",4),rep("blue",4),rep("green",4),rep("chocolate",4))
+
+plotRLE(set1, outline=FALSE, ylim=c(-2, 2),col=colors)
+
+
+
+
+
+## Differential expression
+
+
+
+dds <- DESeqDataSetFromMatrix(countData = counts(set1), colData = pData(set1), design = ~W_1 + x)
+
+dds
+
+
+prdds <- DESeq(dds)
+
+prdds
+
+
+res <- results(prdds)
+
+res
+
+mcols(res, use.names=TRUE)
+
+
+summary(res)
+
+
+res.05 <- results(prdds, alpha=.05)
+
+table(res.05$padj < .05)
+
+
+resLFC1 <- results(prdds, lfcThreshold=1)
+
+table(resLFC1$padj < 0.1)
+
+
+resSig <- subset(res, padj < 0.1)
+
+resSig2 <- subset(resLFC1, padj < 0.1)
+
+
+plot(tab$log2FoldChange, -log(tab$padj))
+
+
+plot(tab$log2FoldChange, -log(tab$padj),log = 'y',pch = 16,col = rgb(1,0,1,0.3))
+
+
+> pts1= tab[which(tab$log2FoldChange < -1 & tab$padj <0.05),]
+> pts2= tab[which(tab$log2FoldChange >1 & tab$padj <0.05),]
+> pts3= tab[which(tab$abs(log2FoldChange) <=1 & tab$padj <0.05),]
+
+> plot(pts2$log2FoldChange,-log(pts2$padj),xlim = c(-4,4),ylim = c(0,50),col = rgb(1,0,1,0.3),pch=16)
+> points(pts1$log2FoldChange,-log(pts1$padj),xlim = c(-4,4),ylim = c(0,50),col = rgb(1,0,1,0.3),pch=16)
+> points(pts3$log2FoldChange,-log(pts3$padj),xlim = c(-4,4),ylim = c(0,50),col = rgb(1,1,0,0.3),pch=16)
+> points(pts4$log2FoldChange,-log(pts4$padj),xlim = c(-4,4),ylim = c(0,50),pch=16)
+> points(pts5$log2FoldChange,-log(pts5$padj),xlim = c(-4,4),ylim = c(0,50),pch=16)
+
+
+> pts3= tab[which(abs(tab$log2FoldChange) <=1 & tab$padj <0.05),]
+> pts4= tab[which(abs(tab$log2FoldChange) >1 & tab$padj >0.05),]
+> pts5= tab[which(abs(tab$log2FoldChange) <=1 & tab$padj >0.05),]
+
+
+sort=resSig[ order(resSig$log2FoldChange, decreasing=TRUE), ]
+
+sort2=resSig2[ order(resSig2$log2FoldChange, decreasing=TRUE), ]
+
+
+head(resSig[ order(resSig$log2FoldChange), ])
+
+head(resSig[ order(resSig$log2FoldChange, decreasing=TRUE), ])
+
+
+topGene <- rownames(res)[which.min(res$padj)]
+
+
+plotMA(res, ylim=c(-5,5))
+
+
+plotMA(resLFC1, ylim=c(-5,5))
+
+topGene <- rownames(resLFC1)[which.min(resLFC1$padj)]
